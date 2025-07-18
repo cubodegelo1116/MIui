@@ -10,9 +10,9 @@ function MIui:CreateWindow(config)
 
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
-    MainFrame.Size = UDim2.new(0, 400, 0, 300)
-    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    MainFrame.Size = UDim2.new(0, 480, 0, 300) -- largura aumentada
+    MainFrame.Position = UDim2.new(0.5, -240, 0.5, -150)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- cor cinza escuro
     MainFrame.BorderSizePixel = 0
     MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
     MainFrame.Parent = ScreenGui
@@ -27,12 +27,8 @@ function MIui:CreateWindow(config)
     local TitleBar = Instance.new("Frame")
     TitleBar.Name = "TitleBar"
     TitleBar.Size = UDim2.new(1, 0, 0, 30)
-    TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- mesma cor da UI
     TitleBar.Parent = MainFrame
-
-    local UICornerTitleBar = Instance.new("UICorner")
-    UICornerTitleBar.CornerRadius = UDim.new(0, 10)
-    UICornerTitleBar.Parent = TitleBar
 
     local Title = Instance.new("TextLabel")
     Title.Size = UDim2.new(1, -60, 1, 0)
@@ -50,7 +46,7 @@ function MIui:CreateWindow(config)
     CloseBtn.Name = "CloseBtn"
     CloseBtn.Size = UDim2.new(0, 30, 1, 0)
     CloseBtn.Position = UDim2.new(1, -30, 0, 0)
-    CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- mesma cor da UI
     CloseBtn.Text = "X"
     CloseBtn.TextColor3 = Color3.new(1, 1, 1)
     CloseBtn.Font = Enum.Font.GothamBold
@@ -66,7 +62,7 @@ function MIui:CreateWindow(config)
     MinBtn.Name = "MinBtn"
     MinBtn.Size = UDim2.new(0, 30, 1, 0)
     MinBtn.Position = UDim2.new(1, -60, 0, 0)
-    MinBtn.BackgroundColor3 = Color3.fromRGB(50, 150, 200)
+    MinBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- mesma cor da UI
     MinBtn.Text = "–"
     MinBtn.TextColor3 = Color3.new(1, 1, 1)
     MinBtn.Font = Enum.Font.GothamBold
@@ -84,46 +80,6 @@ function MIui:CreateWindow(config)
         else
             MainFrame.Size = storedSize
             isMinimized = false
-        end
-    end)
-
-    -- Redimensionar pela borda direita inferior
-    local ResizeGrip = Instance.new("Frame")
-    ResizeGrip.Name = "ResizeGrip"
-    ResizeGrip.Size = UDim2.new(0, 20, 0, 20)
-    ResizeGrip.Position = UDim2.new(1, -20, 1, -20)
-    ResizeGrip.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    ResizeGrip.AnchorPoint = Vector2.new(1, 1)
-    ResizeGrip.Parent = MainFrame
-
-    local UICornerResize = Instance.new("UICorner")
-    UICornerResize.CornerRadius = UDim.new(0, 4)
-    UICornerResize.Parent = ResizeGrip
-
-    local UserInputService = game:GetService("UserInputService")
-    local dragging = false
-    local dragStart = Vector2.new()
-    local startSize = UDim2.new()
-
-    ResizeGrip.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            dragStart = Vector2.new(input.Position.X, input.Position.Y)
-            startSize = MainFrame.Size
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    ResizeGrip.InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = Vector2.new(input.Position.X, input.Position.Y) - dragStart
-            local newWidth = math.clamp(startSize.X.Offset + delta.X, 200, 1000)
-            local newHeight = math.clamp(startSize.Y.Offset + delta.Y, 100, 700)
-            MainFrame.Size = UDim2.new(0, newWidth, 0, newHeight)
         end
     end)
 
