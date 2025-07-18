@@ -4,9 +4,10 @@ function MIui:CreateWindow(config)
     local ScreenGui = Instance.new("ScreenGui")
     ScreenGui.Name = config.Name or "MIui"
     ScreenGui.ResetOnSpawn = false
-    pcall(function()
-        ScreenGui.Parent = game:GetService("CoreGui")
-    end)
+
+    -- Para testar, vamos colocar no PlayerGui em vez do CoreGui
+    local player = game:GetService("Players").LocalPlayer
+    ScreenGui.Parent = player:WaitForChild("PlayerGui")
 
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
